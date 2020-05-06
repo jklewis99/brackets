@@ -15,6 +15,7 @@
         <b-navbar-nav>
           <b-nav-item router-link to="/standings">Standings</b-nav-item>
           <b-nav-item router-link to="/my-bracket">My Bracket</b-nav-item>
+          <b-nav-item router-link to='/new-nav'> NEW NAV</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -98,7 +99,7 @@ nav .menu-item a {
   text-decoration: none;
 }
 #colorful {
-  background-color: rgba(0, 204, 255, 0.795);
+  background-color: rgba(250, 0, 21, 0.795);
 }
 .account-img {
   padding: 0;

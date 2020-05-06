@@ -1,5 +1,4 @@
 <template>
-  <div id="another">
     <table class='standings'>
       <tr>
         <th>Username</th>
@@ -23,7 +22,6 @@
       </tr>
       
     </table>
-  </div>
 </template>
 
 <script>

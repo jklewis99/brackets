@@ -1,5 +1,4 @@
 <template>
-  <div id="another">
     <div class="grid-columns" v-if='bracket !== null'>
       <div class="grid-64">
         <span v-for="(matchup, idx) in bracket.seeds.north" :key="bracket.seeds.north[idx] + idx">
@@ -355,7 +354,6 @@
         </span>
       </div>
     </div>
-  </div>
 </template>
 
 <script>

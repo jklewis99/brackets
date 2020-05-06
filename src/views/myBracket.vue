@@ -1,5 +1,5 @@
 <template>
-  <div id="another">
+  <!-- <div id="another"> -->
 		<!-- <button @click='show'> SJDSK </button> -->
     <div class="grid-columns">
       <div class="grid-64">
@@ -356,7 +356,7 @@
         </span>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>

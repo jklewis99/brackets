@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <navbar />
-    <router-view />
+    <newNav />
+    <div id='another'>
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
-import navbar from "./components/navbar";
+// import navbar from "./components/navbar";
+import newNav from "./views/newNav"
 export default {
   name: "app",
   components: {
-    navbar
+    newNav
   },
   data() {
     return {
@@ -20,24 +23,47 @@ export default {
 </script>
 
 <style>
-#app {
-  /* width: 1420px; */
+:root {
+  font-size: 16px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  --text-primary: #b6b6b6;
+  --text-secondary: #ececec;
+  --bg-primary: #a01634;
+  --bg-secondary: #141418;
+  --width-column: 118px;
+  --height-row: 59px;
+
 }
-html,
+html {
+  width: auto;
+}
 body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
+  /* background-color: white; */
+  display: inline-block;
+  /* width: 100vw; */
+  margin-top: 5rem;
+  color: #b3d6f8;
+  padding: 0;
   background-color: rgb(37, 37, 37);
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #b3d6f8;
 }
-/* span {
-    height: 100%;
-    position:relative; 
-}  */
+#app {
+  /* width: 100vw; */
+}
+
+body::-webkit-scrollbar {
+  width: 0.25rem;
+}
+/* body::-webkit-scrollbar-track {
+  background: #2f2fbb;
+} */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
 h3 {
   font-size: 12px;
   padding: 0;
@@ -48,13 +74,23 @@ h3 {
 }
 
 #another {
-  margin: 10px;
+  display: flex;
+  margin: 1rem 1rem;
+  /* margin: 10px; */
+  /* width: 100%; */
+  flex-direction: row;
+  align-items: center;
+  /* overflow: auto; */
+  justify-content: center;
 }
+
 .grid-columns {
   height: 994px;
   /* background-color: rgb(119, 21, 119); */
+  width: 100%;
+  max-width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 120px) 440px repeat(4, 120px);
+  grid-template-columns: repeat(4, var(--width-column)) 440px repeat(4, var(--width-column));
 }
 
 .grid-64,
@@ -64,16 +100,16 @@ h3 {
   display: grid;
 }
 .grid-64 {
-  grid-template-rows: repeat(8, 59px) 50px repeat(8, 59px);
+  grid-template-rows: repeat(8, var(--height-row)) 50px repeat(8, var(--height-row));
 }
 .grid-32 {
-  grid-template-rows: repeat(4, 118px) 50px repeat(4, 118px);
+  grid-template-rows: repeat(4, calc(2*var(--height-row))) 50px repeat(4, calc(2*var(--height-row)));
 }
 .grid-16 {
-  grid-template-rows: repeat(2, 236px) 50px repeat(2, 236px);
+  grid-template-rows: repeat(2, calc(4*var(--height-row))) 50px repeat(2, calc(4*var(--height-row)));
 }
 .grid-8 {
-  grid-template-rows: repeat(1, 472px) 50px repeat(1, 472px);
+  grid-template-rows: repeat(1, calc(8*var(--height-row))) 50px repeat(1, calc(8*var(--height-row)));
 }
 .final-4-championship {
   display: flex;

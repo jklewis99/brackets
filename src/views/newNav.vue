@@ -3,29 +3,29 @@
 <template>
     <nav class="navbar">
       <ul class="navbar-nav">
-        <li class="nav-item">
+        <li class="nav-item left">
           <router-link to='/universalBracket' class='nav-link'>
             <span class="link-text">Home</span>
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item left">
           <router-link to='/standings' class='nav-link'>
             <span class="link-text">Standings</span>
           </router-link>
         </li>
-        <li class="nav-item">
-          <router-link to='/my-bracket' class='nav-link'>
+        <li class="nav-item left">
+          <router-link :to="{name: 'myBracket', params: {userPicks: userPicks}}" class='nav-link'>
             <span class="link-text">My Bracket</span>
           </router-link>
         </li>
         <li class="nav-item">
-          <a class='nav-link'>
-            <span v-if="user" @click="logout">
-              Log Out
-              <img class='account-img' :src="user.photoURL" width="30" v-if="user">
+            <span v-if="user" class='nav-link'>
+              <span  @click="logout" class="link-text">Log Out</span>
+              <img class='account-img' :src="user.photoURL" width="30" v-if="user.photoURL">
+              <img class='account-img' src="../assets/rock.jpg" width="30" v-else>
             </span>
-					  <router-link to="/authorize" class='nav-link' v-else >Sign In</router-link>
-          </a>
+					  <router-link to="/authorize" class='link-text' v-else >Sign In</router-link>
+          
         </li>
 
       </ul>
@@ -33,31 +33,23 @@
 </template>
 <script>
 import autho from '../firebaseAuth'
+import {mapGetters} from 'vuex'
 export default {
   name: "newNav",
   components: {},
   data() {
     return {
-      services: [
-        {
-          title: "Web",
-          link: "#"
-        },
-        {
-          title: "Design",
-          link: "#"
-        },
-        {
-          title: "Videos",
-          link: "#"
-        }
-      ]
+      
     };
 	},
 	computed: {
 		user() {
 			return this.$store.getters['user/user']
-		}
+    },
+    ...mapGetters({
+      bracketTheme: "bracketTheme/currentBracketState",
+      userPicks: "user/userPicks"
+    })
 	},
 	methods: {
 		logout() {
@@ -71,11 +63,8 @@ export default {
 
 
 .navbar {
-  /* width: 5rem; */
-  /* height: 100vh; */
-  height: 5rem;
+  height: 4rem;
   width: 100vw;
-  /* position: fixed; */
   position: fixed;
   top: 0;
   background-color: var(--bg-primary);
@@ -93,8 +82,14 @@ export default {
   width: 100%;
 }
 .nav-item {
-  padding-left: 5px;
-  padding-right: 5px;
+  /* padding-left: 15px;
+  padding-right: 15px; */
+  text-align: center;
+}
+.left{
+  padding-left: 15px;
+  padding-right: 15px;
+  width: auto;
 }
 .nav-item:last-child {
   margin-left: auto;
@@ -108,5 +103,11 @@ export default {
 }
 .account-img {
   margin-left: 10px;
+}
+.link-text:hover {
+  cursor: pointer;
+}
+img {
+	border-radius: 50px;
 }
 </style>

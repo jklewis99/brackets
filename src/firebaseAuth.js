@@ -32,6 +32,7 @@ const autho = {
 		this.ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 		firebase.auth().onAuthStateChanged((user) => {
+      console.log(user)
       this.context.$store.dispatch('user/setCurrentUser')
       this.context.$store.dispatch('bracketTheme/setCurrentStandings')
 			let requireAuth = this.context.$route.matched.some(record => record.meta.requireAuth)
@@ -39,9 +40,9 @@ const autho = {
 			// check if user has already made changes to their bracket
       // let primaryKey = user.email
       if (user){
-        this.db.collection('user-picks').doc(user.email).get().then(doc => {
+        this.db.collection('user-picks').doc(user.displayName).get().then(doc => {
           if (!doc.exists){
-            this.db.collection('user-picks').doc(user.email).set({
+            this.db.collection('user-picks').doc(user.displayName).set({
               round32: {
                 north: fillEmpty(8, ''),
                 east: fillEmpty(8, ''),

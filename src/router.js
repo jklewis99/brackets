@@ -19,7 +19,8 @@ var routes = [
 		path: '/my-bracket',
 		name: 'myBracket',
 		component: myBracket,
-		meta: { requireAuth: true }
+    meta: { requireAuth: true },
+    props: true
 	},
 	{
 		path: '/authorize',

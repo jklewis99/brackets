@@ -1,27 +1,26 @@
 <template>
-    <table class='standings'>
-      <tr>
-        <th>Username</th>
-        <th>Score</th>
-        <th>Round of 32</th>
-        <th>Sweet 16</th>
-        <th>Elite 8</th>
-        <th>Final 4</th>
-        <th>Championship</th>
-        <th>Champion</th>
-      </tr>
-      <tr v-for='(user, idx) in standings' :key='idx'>
-        <td>{{user.name}}</td>
-        <td>{{user.score}}</td>
-        <td>{{user.round32}}</td>
-        <td>{{user.round16}}</td>
-        <td>{{user.elite8}}</td>
-        <td>{{user.final4}}</td>
-        <td>{{user.championship}}</td>
-        <td>{{user.champion}}</td>
-      </tr>
-      
-    </table>
+  <table class='standings'>
+    <tr>
+      <th class='name'>Name</th>
+      <th>Score</th>
+      <th>Round of 32</th>
+      <th>Sweet 16</th>
+      <th>Elite 8</th>
+      <th>Final 4</th>
+      <th>Championship</th>
+      <th>Champion</th>
+    </tr>
+    <tr v-for='(user, idx) in standings' :key='idx'>
+      <td class='name'>{{user.name}}</td>
+      <td>{{user.score}}</td>
+      <td>{{user.round32}}</td>
+      <td>{{user.round16}}</td>
+      <td>{{user.elite8}}</td>
+      <td>{{user.final4}}</td>
+      <td>{{user.championship}}</td>
+      <td>{{user.champion}}</td>
+    </tr>
+  </table>
 </template>
 
 <script>
@@ -43,7 +42,6 @@ export default {
 
 <style scoped>
 table {
-  width: 80%;
   border-collapse: collapse;
   text-align: center;
   color: black;
@@ -60,10 +58,11 @@ tr:nth-child(even) {
 table, th, td {
   border: 1px solid rgb(0, 204, 255);
 }
-#another {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  padding-top: 40px;
+.standings {
+  min-width: 60%;
+  max-width: 1000px;
+}
+.name {
+  width: 200px;
 }
 </style>

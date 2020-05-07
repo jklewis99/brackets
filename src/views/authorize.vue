@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Sign in</h1>
+  <div class='sign-in'>
+    <h2>Sign in</h2>
 		<div id="firebaseui-auth-container"></div>
   </div>
 </template>
@@ -17,4 +17,13 @@ export default {
 
 <style>
 @import "../../node_modules/firebaseui/dist/firebaseui.css";
+.sign-in {
+  display: flex;
+  /* justify-content: center; */
+  padding-top: 20px;
+  flex-direction: column;
+  text-align: center;
+  width: 400px;
+  height: 400px;
+}
 </style>

@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import universalBracket from './views/universalBracket.vue'
-import myBracket from './views/myBracket.vue'
+import bracket from './views/userBracket.vue'
 import authorize from './views/authorize.vue'
 import autho from './firebaseAuth'
 import standings from './views/standings.vue'
-import newNav from './views/newNav.vue'
 
 Vue.use(Router)
 
@@ -16,9 +15,9 @@ var routes = [
 		component: universalBracket
 	},
 	{
-		path: '/my-bracket',
-		name: 'myBracket',
-		component: myBracket,
+		path: '/bracket/:name',
+		name: 'userBracket',
+		component: bracket,
     meta: { requireAuth: true },
     props: true
 	},
@@ -33,11 +32,6 @@ var routes = [
     name: 'standings',
     component: standings,
     meta: { requireAuth: true}
-  },
-  {
-    path: '/new-nav',
-    name: 'new-nav',
-    component: newNav
   },
 	{
 		path: '*', redirect: '/universalBracket'

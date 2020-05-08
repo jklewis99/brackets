@@ -177,7 +177,23 @@ const actions = {
       }
       return 0
     }
-  }
+  },
+  setUserPicks: ({ commit }, user) => {
+    return new Promise((resolve, reject) => {
+      console.log(user)
+		  autho.db.collection('user-picks').doc(user).get().then((doc) => {
+        if (doc.exists){
+          resolve(doc.data())
+        }
+        else {
+          reject()
+        }
+      })
+		  .catch(error => {
+			  console.log(error)
+		  })
+    })
+  },
 }
 
 export default {

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <newNav />
-    <div id='another'>
+    <div class='another'>
       <router-view></router-view>
     </div>
   </div>
@@ -9,7 +9,7 @@
 
 <script>
 // import navbar from "./components/navbar";
-import newNav from "./views/newNav"
+import newNav from "./components/newNav"
 export default {
   name: "app",
   components: {
@@ -23,34 +23,42 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Electrolize');
+
 :root {
+  font-family: 'Electrolize';
   font-size: 16px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
   --text-primary: #b6b6b6;
   --text-secondary: #ececec;
   --bg-primary: #a01634;
   --bg-secondary: #141418;
-  --width-column: 118px;
+  --width-column: 8vw;
   --height-row: 59px;
 
 }
 html {
-  width: auto;
+  /* width: 100vw; */
 }
 body {
   /* background-color: white; */
   display: inline-block;
-  min-width: 100vw;
-  margin-top: 5rem;
+  min-width: 100%;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
   color: #b3d6f8;
   padding: 0;
   background-color: rgb(37, 37, 37);
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  /* font-family: "Avenir", Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #b3d6f8;
 }
-
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 body::-webkit-scrollbar {
   width: 0.25rem;
 }
@@ -59,26 +67,7 @@ body::-webkit-scrollbar {
   background: #888;
   border-radius: 10px;
 }
-p {
-  width: 118px;
-  font-size: 12px;
-  height: 14px;
-  padding: 0;
-  margin: 0;
-}
-/* span {
-  height: 100%;
-  width: 100%;
-  overflow: visible;
-} */
-.el-1 {
-  border-top: 1px solid black;
-}
 
-
-.show {
-  display: block;
-}
 .team1-final4 {
   height: 15px;
   position: relative;
@@ -92,31 +81,23 @@ p {
 .team-2-final-four {
   top: 0px;
 }
-h3 {
-  font-size: 12px;
-  height: 100%;
-  padding: 0px 3px;
-  margin: 0;
-  bottom: 0;
-  width: max-content;
-  margin-bottom: 0px;
-}
 
-#another {
+.another {
   display: flex;
-  margin: 1rem 1rem;
+  margin: 5rem 1rem;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: right;
 }
 
 .grid-columns {
   height: 994px;
   /* background-color: rgb(119, 21, 119); */
-  width: 100%;
+  min-width: 100%;
   max-width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, var(--width-column)) 440px repeat(
+  align-self: center;
+  grid-template-columns: repeat(4, var(--width-column)) 29vw repeat(
       4,
       var(--width-column)
     );
@@ -165,43 +146,45 @@ h3 {
 }
   
 .championship {
-  justify-content: center;display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
   flex-direction: column;
   height: 100%;
+  width: inherit;
+  position: relative;
 }
 .winner-left,
 .winner-right {
-  width: 140px;
+  width: calc(var(--width-column) + 15px);
+  font-size: 0.9vw;
   background-color: white;
-  height: 30px;
-  padding: 2px;
-}
-.winner-right,
-.winner-left {
+  position: relative;
+  height: 100%;
+  text-align: center;
+  padding: 5px 2px;
   overflow: hidden;
-  transform: translateY(0%);
-  position: absolute;
   color: black;
 }
-.winner-left {
-  margin-left: 50px;
-}
-.winner-right {
-  margin-left: -70px;
-  
-}
+/* .winner-left:first-child {
+  position: relative;
+  margin-left: auto;
+}*/
+/* .winner-right:last-child {
+  position: relative;
+  margin-right: auto;
+}  */
 .champion {
   background-color: white;
-  transform: translateY(-75%);
-  width: 140px;
-  height: 140px;
+  transform: translateY(-105%);
+  width: var(--width-column);
+  height: var(--width-column);
 }
 
 .teams-and-matchups {
   width: 100%;
-  max-width: 118px;
+  max-width: var(--width-column);
   height: 100%;
-  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -234,19 +217,20 @@ h3 {
   border-left: solid grey 2px;
 }
 .team1,
-.team2 {
+.team2, .team1-foreign-user, .team2-foreign-user{
   display: block;
+  float: left;
   font-size: 12px;
   padding: 0 2px;
   height: 15px;
   text-align: left;
-  width: 116px;
+  max-width: var(--width-column);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  /* width: 100%; */
 }
-.team2:last-child {
+
+.team2:last-child, .team2-foreign-user:last-child {
   margin-top: auto;
 }
 .holder {
@@ -254,5 +238,18 @@ h3 {
   justify-content: space-between;
   flex-direction: row;
   height: 100%;
+}
+
+.championship-teams {
+  display: flex;
+  align-self: center;
+  height: 4vh;
+  max-height: 30px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 29vw;
+  /* height: max-content; */
+  position: absolute;
 }
 </style>

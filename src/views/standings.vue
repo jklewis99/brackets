@@ -11,7 +11,7 @@
       <th>Champion</th>
     </tr>
     <tr v-for='(user, idx) in standings' :key='idx'>
-      <td class='name'>{{user.name}}</td>
+      <td class='name selecter' @click='displayUserPicks(user.name)'>{{user.name}}</td>
       <td>{{user.score}}</td>
       <td>{{user.round32}}</td>
       <td>{{user.round16}}</td>
@@ -30,6 +30,19 @@ export default {
   methods: {
     getStandings() {
       this.$store.dispatch('bracketTheme/setCurrentStandings')
+    },
+    displayUserPicks(name) {
+      console.log(name)
+      var userPicks
+      this.$store.dispatch('bracketTheme/setUserPicks', name).then(userPicks => {
+        this.$router.push({
+				name: 'userBracket',
+				params: {
+          userPicks: userPicks,
+          name: name  
+        }
+			})
+      })
     }
   },
   computed: {
@@ -52,6 +65,9 @@ th {
   width: 11%;
   background-color: rgb(255, 130, 203);
 }
+td {
+  height: 30px;
+}
 tr:nth-child(even) {
   background-color: #ebebeb;
 }
@@ -64,5 +80,12 @@ table, th, td {
 }
 .name {
   width: 200px;
+}
+.selecter {
+  transition: 0.3s;
+}
+.selecter:hover {
+  color:rgb(255, 130, 203);
+  cursor: pointer;
 }
 </style>

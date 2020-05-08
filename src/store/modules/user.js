@@ -164,15 +164,17 @@ const actions = {
         console.log('else')
         previousPick = state.userPicks[context.round][context.region][context.idx]
       }
-      commit('setWinner', context)
-      if (previousPick !== '') {
-        commit({
-          type: 'validateFutureRounds', 
-          round: context.round,
-          region: context.region,
-          idx: context.idx,
-          pick: previousPick
-        })
+      if (previousPick !== context.team) {
+        commit('setWinner', context)
+        if (previousPick !== ''){
+          commit({
+            type: 'validateFutureRounds', 
+            round: context.round,
+            region: context.region,
+            idx: context.idx,
+            pick: previousPick
+          })
+        }
       }
       resolve(state.userPicks)
     })

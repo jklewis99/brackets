@@ -147,10 +147,14 @@
               class="team2 team-2-final-four"
             >{{bracket.roundState.final4.north_east[1]}}</div>
           </div>
-          <div class="winner-left">{{bracket.roundState.championship[0]}}</div>
+          
         </div>
         <div class="championship">
           <div class="champion"></div>
+          <div class='championship-teams'>
+            <div class="winner-left">{{bracket.roundState.championship[0]}}</div>
+            <div class="winner-right">{{bracket.roundState.championship[1]}}</div>
+          </div>
         </div>
         <div class="teams-and-matchups">
           <div
@@ -161,7 +165,7 @@
               class="team2 team-2-final-four"
             >{{bracket.roundState.final4.south_west[1]}}</div>
           </div>
-          <div class="winner-right">{{bracket.roundState.championship[1]}}</div>
+          
         </div>
       </div>
     </div>
@@ -221,8 +225,7 @@
         v-for="(matchup, idx) in bracket.roundState.round16.west.length/2"
         :key="bracket.roundState.round16.west[idx] + idx + 'west16'"
       >
-        <div class="holder">
-          <div class="holder2">
+        
             <div class="teams-and-matchups">
               <div
                 class="team1"
@@ -233,8 +236,7 @@
                 >{{bracket.roundState.round16.west[2*idx+1]}}</div>
               </div>
             </div>
-          </div>
-        </div>
+          
       </span>
     </div>
 

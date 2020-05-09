@@ -4,6 +4,13 @@ import {router} from './router'
 import {store} from './store'
 import autho from './firebaseAuth.js'
 import newNav from './components/newNav'
+import { library } from '@fortawesome/fontawesome-svg-core' // svg icons
+import { faHome, faMedal, faUserCheck, faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faHome, faMedal, faUserCheck, faUserEdit, faTimesCircle)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 

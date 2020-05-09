@@ -17,6 +17,7 @@ export default {
   },
   data() {
     return {
+      validationDate: new Date() < new Date(2020, 4, 3, 5, 12)
     };
   },
 };
@@ -110,28 +111,16 @@ body::-webkit-scrollbar {
   display: grid;
 }
 .grid-64 {
-  grid-template-rows: repeat(8, var(--height-row)) 50px repeat(
-      8,
-      var(--height-row)
-    );
+  grid-template-rows: repeat(8, var(--height-row)) 50px repeat(8, var(--height-row));
 }
 .grid-32 {
-  grid-template-rows: repeat(4, calc(2 * var(--height-row))) 50px repeat(
-      4,
-      calc(2 * var(--height-row))
-    );
+  grid-template-rows: repeat(4, calc(2 * var(--height-row))) 50px repeat(4, calc(2 * var(--height-row)));
 }
 .grid-16 {
-  grid-template-rows: repeat(2, calc(4 * var(--height-row))) 50px repeat(
-      2,
-      calc(4 * var(--height-row))
-    );
+  grid-template-rows: repeat(2, calc(4 * var(--height-row))) 50px repeat(2, calc(4 * var(--height-row)));
 }
 .grid-8 {
-  grid-template-rows: repeat(1, calc(8 * var(--height-row))) 50px repeat(
-      1,
-      calc(8 * var(--height-row))
-    );
+  grid-template-rows: repeat(1, calc(8 * var(--height-row))) 50px repeat(1, calc(8 * var(--height-row)));
 }
 .final-4 {
   height: 54%;
@@ -203,7 +192,7 @@ body::-webkit-scrollbar {
 }
 .single-matchup-left,
 .single-matchup-right {
-  height: 51%;
+  height: 49%;
 }
 .single-matchup-left-final-4,
 .single-matchup-right-final-4 {
@@ -227,6 +216,7 @@ body::-webkit-scrollbar {
   max-width: var(--width-column);
   white-space: nowrap;
   text-overflow: ellipsis;
+  /* position: relative; */
   overflow: hidden;
 }
 

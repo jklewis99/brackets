@@ -4,16 +4,21 @@
   <nav class="navbar">
     <ul class="navbar-nav">
       <li class="nav-item left">
+        <font-awesome-icon icon="home" />
         <router-link to="/universalBracket" class="nav-link">
+          
           <span class="link-text">Home</span>
         </router-link>
       </li>
       <li class="nav-item left">
+        <font-awesome-icon icon="medal" />
         <router-link to="/standings" class="nav-link">
           <span class="link-text">Standings</span>
         </router-link>
       </li>
       <li class="nav-item left">
+        <font-awesome-icon icon="user-edit" v-if='validationDate'/>
+        <font-awesome-icon icon="user-check" v-else/>
         <router-link
           :to="{name: 'userBracket', params: {userPicks: userPicks, name: user.displayName}}"
           class="nav-link"
@@ -38,7 +43,9 @@ import { mapGetters } from "vuex";
 export default {
   name: "newNav",
   data() {
-    return {};
+    return {
+      validationDate: this.$parent.validationDate
+    };
   },
   computed: {
     user() {
@@ -94,12 +101,8 @@ span {
   max-width: 100%;
 }
 .nav-item {
-  /* padding-left: 15px; */
   padding-right: 15px;
   text-align: center;
-  /* display: flex;
-  flex-direction: row;
-  justify-content: center; */
 }
 .left {
   padding-left: 15px;

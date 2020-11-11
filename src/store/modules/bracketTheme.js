@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import autho from '../../firebaseAuth'
+const currentTheme = "themes"
 const state = {
   currentBracketState: null,
   standings: null,
@@ -35,14 +36,12 @@ const actions = {
 			// for each key, organize it in the correct format so it can be easily referenced
 			// when displayed on page
       var keys = Object.keys(regionSeeds)
-      console.log(keys)
 			var seeds = {
 
       }
 			for (let key of keys) {
 				seeds[key] = swapSeedsForValues(regionSeeds[key])
       }
-      console.log(seeds)
 			return seeds
 		}
 		function swapSeedsForValues(valuesArray) {
@@ -117,15 +116,15 @@ const actions = {
       })
     })
     .then(() => {
-      getScore(tempArray).then(standings => {
-        commit({
-          type: 'setStandings',
-          standings: standings 
+        getScore(tempArray, state.currentBracketState.roundState.teamsRemaining).then(standings => {
+          commit({
+            type: 'setStandings',
+            standings: standings 
+          })
         })
       })
-    })
 
-    function getScore(users) {
+    function getScore(users, teamsRemaining) {
       var weightedScore = {
         champion: 32,
         championship: 16,
@@ -145,6 +144,7 @@ const actions = {
             final4: 0,
             championship: 0,
             champion: 0,
+            possible: 0,
           }
           const rounds = Object.keys(users[i].choices)
           for (var round of rounds){
@@ -152,6 +152,9 @@ const actions = {
               var regions = Object.keys(users[i].choices[round])
               for (var region of regions) {
                 for (var j = 0; j < users[i].choices[round][region].length; j++){
+                  if (teamsRemaining[users[i].choices[round][region][j]]){
+                    obj['possible'] = obj['possible'] + weightedScore[round]
+                  }
                   if (users[i].choices[round][region][j] === state.currentBracketState.roundState[round][region][j] && state.currentBracketState.roundState[round][region][j] !== ""){
                     // update the current round score
                     obj[round] = obj[round] + weightedScore[round]
@@ -160,6 +163,27 @@ const actions = {
               }
               // update overall score
               obj.score = obj.score + obj[round]
+            }
+            else if (round == 'championship') {
+              for (var j = 0; j < 2; j++) {
+                if (teamsRemaining[users[i].choices[round][j]]){
+                  obj['possible'] = obj['possible'] + weightedScore[round]
+                }
+                if (users[i].choices[round][j] === state.currentBracketState.roundState[round][j] && state.currentBracketState.roundState[round][j] !== ""){
+                  // update the current round score
+                  obj[round] = obj[round] + weightedScore[round]
+                }
+              }
+            }
+            else {
+              // round is champion
+              if (teamsRemaining[users[i].choices[round]]){
+                obj['possible'] = obj['possible'] + weightedScore[round]
+              }
+              if (users[i].choices[round] === state.currentBracketState.roundState[round] && state.currentBracketState.roundState[round] !== ""){
+                // update the champion round score
+                obj[round] = weightedScore[round]
+              }
             }
           }
           scoresArray.push(obj)
@@ -180,7 +204,6 @@ const actions = {
   },
   setUserPicks: ({ commit }, user) => {
     return new Promise((resolve, reject) => {
-      console.log(user)
 		  autho.db.collection('user-picks').doc(user).get().then((doc) => {
         if (doc.exists){
           resolve(doc.data())
@@ -194,6 +217,30 @@ const actions = {
 		  })
     })
   },
+  setTeams: ({commit}, user) => {
+    autho.db.collection('bracket-themes').doc(currentTheme).get().then((doc) => {
+      var arr = getTeams(doc.data().seeding)
+      autho.db.collection('bracket-themes').doc(currentTheme).update({
+        teamsRemaining: arr
+      })
+    })
+    function getTeams(seeding) {
+      var arr = {}
+      for (var i=0; i < seeding.east.length; i++) {
+        arr[seeding.east[i]] = true
+      }
+      for (var i=0; i < seeding.north.length; i++) {
+        arr[seeding.north[i]] = true
+      }
+      for (var i=0; i < seeding.south.length; i++) {
+        arr[seeding.south[i]] = true
+      }
+      for (var i=0; i < seeding.west.length; i++) {
+        arr[seeding.west[i]] = true
+      }
+      return arr
+    }
+  }
 }
 
 export default {

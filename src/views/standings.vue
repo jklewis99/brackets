@@ -9,6 +9,7 @@
       <th>Final 4</th>
       <th>Championship</th>
       <th>Champion</th>
+      <th>Possible</th>
     </tr>
     <tr v-for='(user, idx) in standings' :key='idx'>
       <td class='name selecter' @click='displayUserPicks(user.name)'>{{user.name}}</td>
@@ -19,6 +20,7 @@
       <td>{{user.final4}}</td>
       <td>{{user.championship}}</td>
       <td>{{user.champion}}</td>
+      <td>{{user.possible}}</td>
     </tr>
   </table>
 </template>
@@ -31,15 +33,15 @@ export default {
     getStandings() {
       this.$store.dispatch('bracketTheme/setCurrentStandings')
     },
-    displayUserPicks(name) {
-      console.log(name)
+    displayUserPicks(user) {
+      console.log("CORRECT?", user)
       var userPicks
-      this.$store.dispatch('bracketTheme/setUserPicks', name).then(userPicks => {
+      this.$store.dispatch('bracketTheme/setUserPicks', user).then(userPicks => {
         this.$router.push({
 				name: 'userBracket',
 				params: {
           userPicks: userPicks,
-          name: name  
+          user: user.replace(/ /g, '-')
         }
 			})
       })

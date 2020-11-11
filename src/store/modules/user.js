@@ -25,8 +25,8 @@ const state = {
 
 const getters = {
 	user: state => state.user,
-    isLogged: state => (state.user !== null),
-    userPicks: state => state.userPicks
+  isLogged: state => (state.user !== null),
+  userPicks: state => state.userPicks
 }
 
 const mutations = {
@@ -56,7 +56,6 @@ const mutations = {
   validateFutureRounds: (state, payload) => {
     // will be used to check whether a pick has been changed that is present in future rounds
     // if the change is made in a previous round, then that value must be removed from future rounds
-    console.log("PAYLOAD:", payload)
     var round = payload.round
     var region = payload.region
     var pick = payload.pick
@@ -100,7 +99,6 @@ const mutations = {
         else{
           if (state.userPicks[eachRound][region][indexToCheck] === pick) {
             state.userPicks[eachRound][region][indexToCheck] = ''
-            console.log('updated to empty')
           }
         }
         
@@ -141,27 +139,20 @@ const actions = {
     })
   },
   makeUpdate: ({commit}, context) => {
-    console.log(context.round)
-    console.log(context.region)
     return new Promise((resolve, reject) => {
       var previousPick
-      console.log('CONTEXT ROUND', context.round)
       if (context.round === 'final4') {
-        console.log('final 4')
         var updatedRegion = (context.region == 'north' || context.region == 'east') ? 'north_east' : 'south_west'
         var updatedIdx = (context.region == 'south' || context.region == 'north') ? 0 : 1
         previousPick = state.userPicks[context.round][updatedRegion][updatedIdx]
       }
       else if (context.round === 'championship'){
-        console.log('championship IDX', context.idx)
         previousPick = state.userPicks[context.round][context.idx]
       }
       else if (context.round === 'champion'){
-        console.log('champion')
         previousPick = state.userPicks[context.round]
       }
       else {
-        console.log('else')
         previousPick = state.userPicks[context.round][context.region][context.idx]
       }
       if (previousPick !== context.team) {

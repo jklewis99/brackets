@@ -1,7 +1,6 @@
 <template>
-  <!-- <div id="another"> -->
-  <!-- <button @click='show'> SJDSK </button> -->
   <div class="grid-columns" v-if='bracket !== null'>
+
     <div class="grid-64">
       <span v-for="(matchup, idx) in bracket.seeds.north" :key="bracket.seeds.north[idx] + idx">
         <div class="teams-and-matchups">
@@ -301,6 +300,8 @@
         </div>
       </span>
     </div>
+    <!-- <button @click='go()'>
+    </button> -->
   </div>
   <!-- </div> -->
 </template>
@@ -309,9 +310,82 @@
 <script>
 import autho from "../firebaseAuth";
 import { mapGetters } from "vuex";
+import {setBracket} from "../createBracket";
 
 export default {
   name: "universal-bracket",
+  methods: {
+    addStuff() {
+      this.$store.dispatch('bracketTheme/setTeams')
+    },
+    go() {
+      var something = ["Across the Stars (Love Theme) - Star Wars: Attack of the Clones",
+        "Back to the Future - Back to the Future",
+        "Cantina Band - Star Wars: A New Hope",
+        "Civil War - Captain America: Civil War",
+        "Define Dancing - WALL-E",
+        "Django - Django: Unchained",
+        "Duel of the Fates - Star Wars: The Phantono Menace",
+        "Flight to Neverland - Hook",
+        "Flying Theme - E.T.",
+        "Forbidden Friendship - How to Train Your Dragon",
+        "Gonna Fly Now - Rocky",
+        "Hedwig's Theme - Harry Potter and the Sorcerers Stone",
+        "Hymn to the Fallen - Saving Private Ryan",
+        "Jack Sparrow - Pirates of the Caribbean: Dead Man's Chest",
+        "Jai Ho - Slumdog Millionaire",
+        "James Bond Theme - Dr. No",
+        "Le Festin - Ratatouille",
+        "Love Theme - The Godfather",
+        "Main Title 'Somewhere in My Memory' - Home Alone",
+        "Main Title And First Victim - Jaws",
+        "Married Life - Up",
+        "Mia and Sebastin's Theme - La La Land",
+        "Molossus - Batman Begins",
+        "Mountains - Interstellar",
+        "My Heart Will Go On (Love Theme) - Titanic",
+        "Nemo Egg (Main Title) - Finding Nemo",
+        "Night at the Museum - Night at the Museum",
+        "Pan's Labyrinth Lullaby - Pan's Labyrinth",
+        "Pink Panther Theme - Pink Panther",
+        "Raiders March - Indiana Jones",
+        "Rey's Theme - Star Wars: The Force Awakens",
+        "Shallow - A Star is Born",
+        "Shawshank Prison - Stoic Theme - The Shawshank Redmption",
+        "Skyfall - Skyfall",
+        "Story Of Wick - John Wick",
+        "Suite from Mulan - Mulan",
+        "Suite from the Polar Express - The Polar Express",
+        "The Avengers - The Avengers",
+        "The Batman Theme - Batman",
+        "The Glory Days - The Incredibles",
+        "The Good the Bad and the Ugly - The Good, The Bad and the Ugly",
+        "The Imitation Game - The Imitation Game",
+        "The Imperial March (Darth Vader's Theme) - Star Wars: The Empire Strikes Back",
+        "The Theory of Everything - The Theory of Everything",
+        "Theme from Jurassic Park - Jurassic Park",
+        "Theme from Schindler's List - Schindler's List",
+        "Theme from Superman - Superman",
+        "Time - Inception",
+        "Trashin' The Camp - Tarzan",
+        "Writing's On The Wall (Instrumental) - Spectre",
+        "The Avengers - The Avengers",
+        "The Batman Theme - Batman",
+        "The Glory Days - The Incredibles",
+        "The Good the Bad and the Ugly - The Good, The Bad and the Ugly",
+        "The Imitation Game - The Imitation Game",
+        "The Imperial March (Darth Vader's Theme) - Star Wars: The Empire Strikes Back",
+        "The Theory of Everything - The Theory of Everything",
+        "Theme from Jurassic Park - Jurassic Park",
+        "Theme from Schindler's List - Schindler's List",
+        "Theme from Superman - Superman",
+        "Time - Inception",
+        "Trashin' The Camp - Tarzan",
+        "Writing's On The Wall (Instrumental) - Spectre"
+        ]
+      setBracket(something, "themes", true);
+    }
+  },
 	computed: {
 		...mapGetters({
 			bracket: "bracketTheme/currentBracketState",

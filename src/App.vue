@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <newNav />
-    <div class='another'>
+    <div class="another">
       <router-view></router-view>
     </div>
   </div>
@@ -9,7 +9,7 @@
 
 <script>
 // import navbar from "./components/navbar";
-import newNav from "./components/newNav"
+import newNav from "./components/newNav";
 export default {
   name: "app",
   components: {
@@ -17,25 +17,42 @@ export default {
   },
   data() {
     return {
-      validationDate: new Date() < new Date(2020, 4, 3, 5, 12)
+      validationDate: new Date() < new Date(2020, 12, 9)
     };
   },
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Electrolize');
+@import url("https://fonts.googleapis.com/css?family=Electrolize");
+
+/* Small Screens/Mobile */
+@media only screen and (max-width: 600px) {
+  :root {
+    --width-column: 80px;
+    --height-row: 10vh;
+  }
+  #app {
+    /* max-width: 100vw; */
+    overflow: visible;
+  }
+}
+
+/* Large Screens/Desktop */
+@media only screen and (min-width: 600px) {
+  :root {
+    --width-column: 8vw;
+    --height-row: 10vh;
+  }
+}
 
 :root {
-  font-family: 'Electrolize';
+  font-family: "Electrolize";
   font-size: 16px;
   --text-primary: #b6b6b6;
   --text-secondary: #ececec;
   --bg-primary: #a01634;
   --bg-secondary: #141418;
-  --width-column: 8vw;
-  --height-row: 59px;
-
 }
 html {
   /* width: 100vw; */
@@ -92,13 +109,13 @@ body::-webkit-scrollbar {
 }
 
 .grid-columns {
-  height: 994px;
+  /* height: 994px; */
   /* background-color: rgb(119, 21, 119); */
   min-width: 100%;
   max-width: 100%;
   display: grid;
   align-self: center;
-  grid-template-columns: repeat(4, var(--width-column)) 29vw repeat(
+  grid-template-columns: repeat(4, var(--width-column)) calc(3.5*var(--width-column)) repeat(
       4,
       var(--width-column)
     );
@@ -111,16 +128,28 @@ body::-webkit-scrollbar {
   display: grid;
 }
 .grid-64 {
-  grid-template-rows: repeat(8, var(--height-row)) 50px repeat(8, var(--height-row));
+  grid-template-rows: repeat(8, var(--height-row)) 50px repeat(
+      8,
+      var(--height-row)
+    );
 }
 .grid-32 {
-  grid-template-rows: repeat(4, calc(2 * var(--height-row))) 50px repeat(4, calc(2 * var(--height-row)));
+  grid-template-rows: repeat(4, calc(2 * var(--height-row))) 50px repeat(
+      4,
+      calc(2 * var(--height-row))
+    );
 }
 .grid-16 {
-  grid-template-rows: repeat(2, calc(4 * var(--height-row))) 50px repeat(2, calc(4 * var(--height-row)));
+  grid-template-rows: repeat(2, calc(4 * var(--height-row))) 50px repeat(
+      2,
+      calc(4 * var(--height-row))
+    );
 }
 .grid-8 {
-  grid-template-rows: repeat(1, calc(8 * var(--height-row))) 50px repeat(1, calc(8 * var(--height-row)));
+  grid-template-rows: repeat(1, calc(8 * var(--height-row))) 50px repeat(
+      1,
+      calc(8 * var(--height-row))
+    );
 }
 .final-4 {
   height: 54%;
@@ -133,7 +162,7 @@ body::-webkit-scrollbar {
   /* height: 522px; */
   /* border: 2px solid green; */
 }
-  
+
 .championship {
   align-items: center;
   justify-content: center;
@@ -180,7 +209,8 @@ body::-webkit-scrollbar {
 }
 
 .single-matchup-left,
-.single-matchup-right, .single-matchup-left-final-4,
+.single-matchup-right,
+.single-matchup-left-final-4,
 .single-matchup-right-final-4 {
   border-top: solid grey 2px;
   border-bottom: solid grey 2px;
@@ -192,21 +222,25 @@ body::-webkit-scrollbar {
 }
 .single-matchup-left,
 .single-matchup-right {
-  height: 49%;
+  height: 50%;
 }
 .single-matchup-left-final-4,
 .single-matchup-right-final-4 {
   height: 53%;
 }
 
-.single-matchup-left, .single-matchup-left-final-4 {
+.single-matchup-left,
+.single-matchup-left-final-4 {
   border-right: solid grey 2px;
 }
-.single-matchup-right, .single-matchup-right-final-4 {
+.single-matchup-right,
+.single-matchup-right-final-4 {
   border-left: solid grey 2px;
 }
 .team1,
-.team2, .team1-foreign-user, .team2-foreign-user{
+.team2,
+.team1-foreign-user,
+.team2-foreign-user {
   display: block;
   float: left;
   font-size: 12px;
@@ -220,7 +254,8 @@ body::-webkit-scrollbar {
   overflow: hidden;
 }
 
-.team2:last-child, .team2-foreign-user:last-child {
+.team2:last-child,
+.team2-foreign-user:last-child {
   margin-top: auto;
 }
 .holder {
@@ -233,12 +268,12 @@ body::-webkit-scrollbar {
 .championship-teams {
   display: flex;
   align-self: center;
-  height: 4vh;
-  max-height: 30px;
+  height: calc(.5*var(--height-row));
+  /* max-height: 30px; */
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  width: 29vw;
+  width: calc(3.5*var(--width-column));
   /* height: max-content; */
   position: absolute;
 }

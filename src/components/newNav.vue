@@ -4,25 +4,24 @@
   <nav class="navbar">
     <ul class="navbar-nav">
       <li class="nav-item left">
-        <font-awesome-icon icon="home" />
+        
         <router-link to="/universalBracket" class="nav-link">
-          
+          <font-awesome-icon icon="home" />
           <span class="link-text">Home</span>
         </router-link>
       </li>
       <li class="nav-item left">
-        <font-awesome-icon icon="medal" />
         <router-link to="/standings" class="nav-link">
+          <font-awesome-icon icon="medal" />
           <span class="link-text">Standings</span>
         </router-link>
       </li>
       <li class="nav-item left">
-        <font-awesome-icon icon="user-edit" v-if='validationDate'/>
-        <font-awesome-icon icon="user-check" v-else/>
-        <router-link
-          :to="{name: 'userBracket', params: {userPicks: userPicks, name: user.displayName}}"
+        <router-link :to="{name: 'userBracket', params: {userPicks: userPicks, user: userName.replace(/ /g, '-')}}"
           class="nav-link"
         >
+          <font-awesome-icon icon="user-edit" v-if='validationDate'/>
+          <font-awesome-icon icon="user-check" v-else/>
           <span class="link-text">My Bracket</span>
         </router-link>
       </li>
@@ -44,7 +43,7 @@ export default {
   name: "newNav",
   data() {
     return {
-      validationDate: this.$parent.validationDate
+      validationDate: this.$parent.validationDate,
     };
   },
   computed: {
@@ -53,9 +52,11 @@ export default {
     },
     ...mapGetters({
       bracketTheme: "bracketTheme/currentBracketState",
-      userPicks: "user/userPicks",
-      user: "user/user"
-    })
+      userPicks: "user/userPicks"
+    }),
+    userName() {
+      return this.user !== null ? this.user.displayName : ""
+    }
   },
   methods: {
     logout() {
@@ -66,6 +67,25 @@ export default {
 </script>
 
 <style scoped>
+@media only screen and (max-width: 600px) {
+  .link-text {
+    display: none;
+  }
+  /* .navbar {
+    position: sticky;
+    bottom:0;
+    left:0;
+    right:0;
+    width: 100vw;
+  } */
+}
+
+/* Large Screens/Desktop */
+@media only screen and (min-width: 600px) {
+  .navbar {
+    
+  }
+}
 span {
   display: inline-block;
 }
@@ -78,9 +98,9 @@ span {
 .navbar {
   font-size: 18px;
   font-weight: bold;
-  height: 4rem;
   width: 100%;
   position: fixed;
+  height: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -115,7 +135,9 @@ span {
 
 .nav-link {
   color: white;
+  text-decoration: none;
 }
+
 .nav-link:hover {
   color: rgb(112, 112, 112);
 }

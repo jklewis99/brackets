@@ -15,7 +15,7 @@ var routes = [
 		component: universalBracket
 	},
 	{
-		path: '/bracket/:name',
+		path: '/bracket/:user',
 		name: 'userBracket',
 		component: bracket,
     meta: { requireAuth: true },
@@ -52,9 +52,12 @@ router.beforeEach((to, from, next) => {
 		next('authorize')
 	}
   else if (guestOnly && currentUser){
+    // console.log("OPE NO...")
 		next('universalBracket')
 	}
   else{
+    // console.log('require', requireAuth)
+    // console.log('Not currentUser', !currentUser)
 		next()
 	}
 })

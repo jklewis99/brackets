@@ -6,28 +6,34 @@
           <font-awesome-icon :icon="['far', 'times-circle']" />
         </span>
         <!-- <div class='popup-team1'>{{team1}}<div class='img-holder'></div></div> -->
-        <div><iframe
-            v-bind:src="site"
+        <div>
+          <iframe class="framed-playlist"
+            v-bind:src="team1"
             width="250"
             height="330"
             frameborder="0"
             allowtransparency="true"
             allow="encrypted-media"
-          ></iframe></div>
+          >
+          </iframe>
+        </div>
         <div class='vs'>VS</div>
-        <div><iframe
-            v-bind:src="site2"
+        <div>
+          <iframe
+          title="team-2" 
+          class="framed-playlist"
+            v-bind:src="team2"
             width="250"
             height="330"
             frameborder="0"
             allowtransparency="true"
             allow="encrypted-media"
-          ></iframe></div>
+          >
+          </iframe>
+        </div>
         <!-- <div class='popup-team2'><div class='img-holder'></div>{{team2}}</div> -->
         <!-- add field that checks if match is over, and if it is over display score-->
-      </div>
-        
-      
+      </div> 
     </div>
     <div class="grid-columns">
       <div class="grid-64">
@@ -108,7 +114,7 @@
               <span :class="compareToUniversalBracket('round32', 'east', 2*idx)">{{userPicks.round32.east[2*idx]}}</span>
             </div>
             <div class="single-matchup-left">
-              <font-awesome-icon icon="question-circle" class='info-btn' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn' @click="fillPopup(userPicks.round32.east[2*idx], userPicks.round32.east[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('east', 2*idx+1, 'round32')"
@@ -157,7 +163,7 @@
               <span :class="compareToUniversalBracket('round16', 'east', 2*idx)">{{userPicks.round16.east[2*idx]}}</span>
             </div>
             <div class="single-matchup-left">
-              <font-awesome-icon icon="question-circle" class='info-btn' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn' @click="fillPopup(userPicks.round16.east[2*idx], userPicks.round16.east[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('east', 2*idx+1, 'round16')"
@@ -182,7 +188,7 @@
               <span :class="compareToUniversalBracket('elite8', 'north', 2*idx)">{{userPicks.elite8.north[2*idx]}}</span>
             </div>
             <div class="single-matchup-left">
-              <font-awesome-icon icon="question-circle" class='info-btn' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn' @click="fillPopup(userPicks.elite8.north[2*idx], userPicks.elite8.north[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('north', 2*idx+1, 'elite8')"
@@ -205,7 +211,7 @@
               <span :class="compareToUniversalBracket('elite8', 'east', 2*idx)">{{userPicks.elite8.east[2*idx]}}</span>
             </div>
             <div class="single-matchup-left">
-              <font-awesome-icon icon="question-circle" class='info-btn' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn' @click="fillPopup(userPicks.elite8.east[2*idx], userPicks.elite8.east[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('east', 2*idx+1, 'elite8')"
@@ -236,10 +242,20 @@
             </div>
           </div>
           <div class="championship">
-            <div class="champion"></div>
+            <div :class="[canEmbed() ? 'champion' : 'champion']" >
+              <iframe 
+            v-bind:src="getEmbeddedLink(userPicks.champion)"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            allowtransparency="true"
+            allow="encrypted-media"
+          >
+          </iframe>
+          </div>
             <div class="championship-teams">
-              <div class="winner-left">{{userPicks.championship[0]}}</div>
-              <div class="winner-right">{{userPicks.championship[1]}}</div>
+              <div :class="[validateUser() ? 'winner-left winner-left-v' : 'winner-left']" v-on:click="chooseChampion(0)">{{userPicks.championship[0]}}</div>
+              <div :class="[validateUser() ? 'winner-right winner-right-v' : 'winner-right']" @click="chooseChampion(1)">{{userPicks.championship[1]}}</div>
             </div>
           </div>
           <div class="teams-and-matchups">
@@ -274,7 +290,7 @@
               <span :class="compareToUniversalBracket('elite8', 'south', 2*idx)">{{userPicks.elite8.south[2*idx]}}</span>
             </div>
             <div class="single-matchup-right">
-              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(userPicks.elite8.south[2*idx], userPicks.elite8.south[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('south', 2*idx+1, 'elite8')"
@@ -297,7 +313,7 @@
               <span :class="compareToUniversalBracket('elite8', 'west', 2*idx)">{{userPicks.elite8.west[2*idx]}}</span>
             </div>
             <div class="single-matchup-right">
-              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(userPicks.elite8.west[2*idx], userPicks.elite8.west[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('west', 2*idx+1, 'elite8')"
@@ -322,7 +338,7 @@
               <span :class="compareToUniversalBracket('round16', 'south', 2*idx)">{{userPicks.round16.south[2*idx]}}</span>
             </div>
             <div class="single-matchup-right">
-              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(userPicks.round16.south[2*idx], userPicks.round16.south[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('south', 2*idx+1, 'round16')"
@@ -345,7 +361,7 @@
               <span :class="compareToUniversalBracket('round16', 'west', 2*idx)">{{userPicks.round16.west[2*idx]}}</span>
             </div>
             <div class="single-matchup-right">
-              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(userPicks.round16.west[2*idx], userPicks.round16.west[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('west', 2*idx+1, 'round16')"
@@ -370,7 +386,7 @@
               <span :class="compareToUniversalBracket('round32', 'south', 2*idx)">{{userPicks.round32.south[2*idx]}}</span>
             </div>
             <div class="single-matchup-right">
-              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(userPicks.round32.south[2*idx], userPicks.round32.south[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('south', 2*idx+1, 'round32')"
@@ -393,7 +409,7 @@
               <span :class="compareToUniversalBracket('round32', 'west', 2*idx)">{{userPicks.round32.west[2*idx]}}</span>
             </div>
             <div class="single-matchup-right">
-              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(matchup[0], matchup[1])" />
+              <font-awesome-icon icon="question-circle" class='info-btn btn-left' @click="fillPopup(userPicks.round32.west[2*idx], userPicks.round32.west[2*idx+1])" />
               <div
                 :class="[validateUser() ? 'team2' : 'team2-foreign-user']"
                 @click="chooseWinner('west', 2*idx+1, 'round32')"
@@ -503,14 +519,39 @@ export default {
         this.$forceUpdate();
       }
     },
+    chooseChampion(side, team=null){
+      if (this.validationDate && this.validateUser()) {
+        var teamteam;
+        if (team !== null) {
+          teamteam = team;
+        } else {
+          teamteam = this.userPicks['championship'][side];
+        }
+        this.$store.dispatch({
+          type: "user/setCurrentWinner",
+          team: teamteam,
+          round: this.nextRound['championship'],
+          region: null,
+          idx: 0
+        });
+        this.$forceUpdate();
+      }
+    },
+    canEmbed() {
+      return this.userPicks['champion'] !== null;
+    },
     validateUser() {
       // console.log(this.currentUser.displayName)
       return this.currentUser.displayName === this.spaceUser;
     },
     fillPopup(team1, team2) {
-      this.team1 = team1
-      this.team2 = team2
+      this.team1 = this.getEmbeddedLink(team1)
+      this.team2 = this.getEmbeddedLink(team2)
       this.togglePopup()
+    },
+    getEmbeddedLink(team){
+      // console.log(this.bracket)
+      return this.bracket.roundState.embeddedLinks[team]
     },
     // When the user clicks on div, open the popup
     togglePopup() {
@@ -556,6 +597,11 @@ export default {
 .team1:hover span,
 .team2:hover span {
   background-color: rgb(37, 37, 37);
+}
+.winner-left-v:hover,
+.winner-right-v:hover {
+  cursor: pointer;
+  color: gray;
 }
 .single-matchup-left, .single-matchup-right {
   position: relative;
@@ -684,6 +730,29 @@ export default {
   }
   to {
     opacity: 1;
+  }
+}
+@media only screen and (max-width: 710px) {
+  .detailed-matchup {
+    flex-direction: column;
+    width: 50vw;
+    height: 98vh;
+    position: fixed;
+    top: 12vh;
+  }
+  .popup-window {
+    position: fixed;
+    justify-content: auto;
+    align-items: flex-start;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    /* height: 100vh; */
+  }
+
+  .framed-playlist {
+    /* width: 400px;
+    height: 460px; */
   }
 }
 </style>

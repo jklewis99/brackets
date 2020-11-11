@@ -43,6 +43,7 @@ export default {
   :root {
     --width-column: 8vw;
     --height-row: 10vh;
+    max-height: 200vh;
   }
 }
 
